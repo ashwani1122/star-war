@@ -253,50 +253,7 @@
             noise.start();
         }
         
-        function createEarthPlanet() {
-            alert("planet is created")
-        planets = [{
-            x: WIDTH * 0.72,
-            y: HEIGHT * 0.38,
-            radius: 75,
-            type: 'earth',
-            rotation: 0            
-        }];
-
-        console.log(`this is the planets ${planets}`)
-    }
-
-        function landOnEarth() {
-    if (onEarth) return;
-    onEarth = true;
-    
-    // Cartoon landing effect
-    document.getElementById('landing-text').style.display = 'block'; // add this div in HTML if not present
-    setTimeout(() => {
-        document.getElementById('landing-text').style.display = 'none';
-    }, 2000);
-    
-    // Clear space enemies
-    enemies = [];
-    bullets = [];
-    
-    // Spawn cartoon Earth enemies (green aliens/zombies)
-    for (let i = 0; i < 8; i++) {
-        enemies.push({
-            x: 150 + Math.random() * (WIDTH - 300),
-            y: 100 + Math.random() * (HEIGHT - 250),
-            size: 34,
-            speed: 2.1,
-            health: 5,
-            color: '#22cc44',
-            type: 'earth'
-        });
-    }
-    
-    // Change background to green Earth feel
-    ctx.fillStyle = '#113300'; // grass color
-}
-        function playExplosionSound(intensity = 1) {
+       function playExplosionSound(intensity = 1) {
             const noise = audioContext.createBufferSource();
             const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.6, audioContext.sampleRate);
             const data = buffer.getChannelData(0);
@@ -436,13 +393,7 @@
         function update() {
             if (!gameRunning) return
                         // Earth landing
-            if (!onEarth) {
-                for (let p of planets) {
-                    if (p.type === 'earth' && Math.hypot(player.x - p.x, player.y - p.y) < p.radius + player.size) {
-                        landOnEarth();
-                    }
-                }
-            }
+          
             // Player movement
             let dx = 0, dy = 0
             if (keys['w'] || keys['ArrowUp']) dy -= 1
@@ -548,7 +499,6 @@
             
             // === WAVE PROGRESSION (Fixed & Clean) ===
             if (enemies.length >10) {
-                    // alert("hello world ")
 
                 if (Date.now() - lastSpawn > 600) {    
                     // 1.4 seconds after clearing
@@ -601,64 +551,6 @@
                 if (star.y > canvas.height) star.y = 0
             }
             ctx.globalAlpha = 1
-                    // === DRAW EARTH PLANET (Put this inside your draw() function) ===
-for (let p of planets) {
-
-    alert("hi there")
-    if (p.type === 'earth') {
-        p.rotation += 0.003;   // slow rotation
-
-        // Outer glow
-        ctx.shadowBlur = 70;
-        ctx.shadowColor = '#66ffcc';
-        ctx.fillStyle = 'rgba(34, 136, 255, 0.6)';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius + 18, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Main Planet Body (Blue Ocean)
-        ctx.shadowBlur = 40;
-        ctx.shadowColor = '#44ddff';
-        ctx.fillStyle = '#2288ff';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Cartoon Continents (Green)
-        ctx.fillStyle = '#00bb44';
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
-
-        // Big continent 1
-        ctx.beginPath();
-        ctx.ellipse(-12, -18, 34, 26, 0.7, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Continent 2
-        ctx.beginPath();
-        ctx.ellipse(25, 15, 29, 19, -0.9, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-
-        // White Clouds
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-        ctx.beginPath();
-        ctx.arc(p.x - 28, p.y - 26, 13, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(p.x + 22, p.y - 19, 11, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Highlight / Atmosphere
-        ctx.strokeStyle = 'rgba(180, 255, 255, 0.6)';
-        ctx.lineWidth = 12;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius + 6, 0, Math.PI * 2);
-        ctx.stroke();
-    }
-} // Grid floor effect
             ctx.strokeStyle = 'rgba(0, 255, 204, 0.08)'
             ctx.lineWidth = 2
             for (let x = 0; x < canvas.width; x += 60) {
@@ -788,9 +680,6 @@ for (let p of planets) {
         }
 
             function restartGame() {
-                alert("planet is created before")
-                createEarthPlanet();
-                alert("planet is created")
             player.x = canvas.width / 2
             player.y = canvas.height / 2
             player.health = 100
