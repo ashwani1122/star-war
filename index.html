@@ -498,9 +498,9 @@
             }
             
             // === WAVE PROGRESSION (Fixed & Clean) ===
-            if (enemies.length >10) {
+            if (enemies.length ===0) {
 
-                if (Date.now() - lastSpawn > 600) {    
+                if (Date.now() - lastSpawn > 1400) {    
                     // 1.4 seconds after clearing
                     wave++
                     waveEl.textContent = wave
